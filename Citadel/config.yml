@@ -35,11 +35,13 @@ reinforcements:
   hit_points: 50
 # mature time is in minutes
   mature_time: 5
-  acid_time: 20
+  acid_time: 30
   scale_amount: 1
+# grace period is in minutes, forced 100% return within that time if undamaged. Set to 0 to disable (default)
+  grace_period: 1
   lore:
   effect:
-   type: FLYING_GLYPH
+   type: ENCHANTMENT_TABLE
    speed: 0.5
    particleCount: 50
  iron_tier:
@@ -47,14 +49,16 @@ reinforcements:
   requirements: 1
   return: 1
   percent_chance: 100
-  hit_points: 300
+  hit_points: 250
 # mature time is in minutes
-  mature_time: 30
-  acid_time: 360
+  mature_time: 5
+  acid_time: 30
   scale_amount: 1
+# grace period is in minutes, forced 100% return within that time if undamaged. Set to 0 to disable (default)
+  grace_period: 1
   lore:
   effect:
-   type: FLYING_GLYPH
+   type: ENCHANTMENT_TABLE
    speed: 0.5
    particleCount: 50
  diamond_tier:
@@ -62,31 +66,36 @@ reinforcements:
   requirements: 1
   return: 1
   percent_chance: 100
-  hit_points: 2000
+  hit_points: 1800
 # mature time is in minutes
-  mature_time: 240
-  acid_time: 2880
+  mature_time: 600
+  acid_time: 30
   scale_amount: 1
+# grace period is in minutes, forced 100% return within that time if undamaged. Set to 0 to disable (default)
+  grace_period: 1
   lore:
   effect:
-   type: FLYING_GLYPH
+   type: ENCHANTMENT_TABLE
    speed: 0.5
    particleCount: 50
- instant_emerald:
-  material: EMERALD
+ bedrock_tier:
+  material: BEDROCK
   requirements: 1
   return: 1
   percent_chance: 100
-  hit_points: 1500
-  mature_time: 0
-  acid_time: 2160
+  hit_points: 3000
+# mature time is in minutes
+  mature_time: 5000
+  acid_time: 30
   scale_amount: 1
+# grace period is in minutes, forced 100% return within that time if undamaged. Set to 0 to disable (default)
+  grace_period: 1
   lore:
-   - This reinforcement instantly matures
   effect:
-   type: FLYING_GLYPH
+   type: ENCHANTMENT_TABLE
    speed: 0.5
    particleCount: 50
+ 
 # Delete the comment char to use lore.  Three spaces are required 
 # after lore. You can add multiple lines by adding -
 #   - Some string representation required for this reinforcement.
@@ -100,7 +109,7 @@ reinforcements:
   return: 0
   percent_chance: 100
   hit_points: 147483646
-  mature_time: 1
+  mature_time: 147483646
   acid_time: 147483646
   scale_amount: 1
   lore:
@@ -133,13 +142,11 @@ non_reinforceables:
  - SUGAR_CANE_BLOCK
  - PORTAL
  - CAKE_BLOCK
+ - PUMPKIN_STEM
+ - MELON_STEM
  - VINE
- - ENDER_PORTAL
- - WEB
- - CARROT
- - CROPS
- - POTATO
  - NETHER_WARTS
+ - ENDER_PORTAL
 reset_player_state: 300
 enable_maturation: true
 # The max amount of reinforcements to keep loaded
@@ -154,12 +161,25 @@ save_interval_ticks: 600
 # reinforcement_damageMultiplier is m where BlockDamage = 2 ^ (n/m) where n is equal to the number of days the group has been inactive
 reinforcement_damageMultiplier: 365
 mysql:
- hostname: localhost
+ hostname: "localhost"
  port: 3306
- dbname: ''
- username: ''
- password: ''
+ dbname: "civ"
+ username: "civ"
+ password: "<password>"
 # Shows reinforcement information as percentile value
 show_health_as_percent: true
 # Whether players are automatically put in reinforcement bypass mode on login
 default_bypass_mode: true
+
+
+
+#uncomment below to make player-made reinforcements for the following materials
+#get multiplied by the provided numbers, on top of their normal reinforcement amount
+#For example, with these settings, if stone reinforcement normally provides 50 hitpoints,
+#now it would provide 250 for grass and dirt, 500 for glass, and 50 for everything else.
+#This is intended to allow some decorative, nice looking buildings to be stronger if
+#reinforced, so builders don't have to decide between security and aesthetics.
+multipliers:
+ GRASS: 5.0
+ DIRT: 5.0
+ GLASS: 30.0
